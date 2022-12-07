@@ -1,6 +1,6 @@
 import React from 'react';
-import {UserSimpleDisplay} from '../components/UserSimpleDisplay';
-import {UserShortDisplay} from '../components/UserShortDisplay';
+import {SimpleCard} from '../components/SimpleCard';
+import {LineCard} from '../components/LineCard';
 //import { useDispatch, useSelector } from "react-redux";
 
 
@@ -14,35 +14,39 @@ const SHORT_LABEL='SHORT';
 */
 
 
-    let display="";
-    switch(props.display_type){
-        case SHORT_LABEL:
-            display = (                
-                <UserShortDisplay 
-                    surname = {current_card.surname}
-                    lastname = {current_card.lastname}
-                    img = {current_card.img}
-                    money = {current_card.money}> 
-                </UserShortDisplay>
-            );
+let display="";
+switch(props.display_type){
+    case SHORT_LABEL:
+        display = (                
+            <lineCard 
+            id = {current_card.id}
+            name = {current_card.name}
+            description = {current_card.description}
+            price = {current_card.price}
+            family = {current_card.family}
+            affinity = {current_card.affinity}
+            hp = {current_card.hp}
+            energy = {current_card.energy}> 
+            </lineCard>
+        );
 
-            break;
-        case FULL_LABEL:
-            display=(                
-                <UserSimpleDisplay 
-                    id = {current_card.id}
-                    img_src = {}
-                    surname = {current_card.surname}
-                    lastname = {current_card.lastname}
-                    login = {current_card.login}
-                    pwd = {current_card.pwd}
-                    money = {current_card.money}
-                    img = {current_card.img}> 
-                </UserSimpleDisplay>
-            );
-            break;
-        default:
-            display=(<h4>No Display Available</h4>);
-    }
-        return display;
-    }
+        break;
+    case FULL_LABEL:
+        display=(                
+            <simpleCard 
+                id = {current_card.id}
+                img_src = {current_card.img_src}
+                name = {current_card.name}
+                description = {current_card.description}
+                price = {current_card.price}
+                family = {current_card.family}
+                affinity = {current_card.affinity}
+                hp = {current_card.hp}
+                energy = {current_card.energy}> 
+            </simpleCard>
+        );
+        break;
+    default:
+        display=(<h4>No Display Available</h4>);
+}
+    return display;
