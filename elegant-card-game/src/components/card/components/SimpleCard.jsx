@@ -4,7 +4,6 @@ import 'semantic-ui-css/semantic.min.css'
 
 const SimpleCard = ({hp, img_src, name, energy, description, price, family, affinity, id}) => (
     
-
         <Card>
             <Image src = {img_src} wrapped ui = {false} />
             <Card.Content>

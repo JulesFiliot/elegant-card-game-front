@@ -1,4 +1,3 @@
-import './App.css';
 import SimpleUser from './components/user/components/SimpleUser';
 import React from 'react';
 import LineCard from './components/card/components/LineCard';
