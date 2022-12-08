@@ -7,7 +7,7 @@ const SimpleCard = ({hp, img_src, name, energy, description, price, family, affi
         <Card>
             <Image src = {img_src} wrapped ui = {false} />
             <Card.Content>
-                <Card.Header>hp = {hp} {name} eneryg = {energy} </Card.Header>
+                <Card.Header>hp = {hp} {name} energy = {energy} </Card.Header>
                 <Card.Description>
                     {description}
                 </Card.Description>
@@ -20,6 +20,6 @@ const SimpleCard = ({hp, img_src, name, energy, description, price, family, affi
                     </a>
             </Card.Content>
         </Card>
-    )
+    );
 
 export default SimpleCard;

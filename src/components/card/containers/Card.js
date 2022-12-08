@@ -1,6 +1,6 @@
 import React from 'react';
-import {SimpleCard} from '../components/SimpleCard';
-import {LineCard} from '../components/LineCard';
+import SimpleCard from '../components/SimpleCard';
+import LineCard from '../components/LineCard';
 //import { useDispatch, useSelector } from "react-redux";
 
 
@@ -8,45 +8,45 @@ import {LineCard} from '../components/LineCard';
 const FULL_LABEL='FULL';
 const SHORT_LABEL='SHORT';
 
-/*
- export const User=(props)=> {
-    let current_card = useSelector(state => state.userReducer.user);
-*/
 
+ const Card=(props)=> {
+    //let current_card = useSelector(state => state.userReducer.user);
+    let display="";
+    switch(props.display_type){
+        case SHORT_LABEL:
+            display = (                
+                <LineCard 
+                id = {props.id}
+                name = {props.name}
+                description = {props.description}
+                price = {props.price}
+                family = {props.family}
+                affinity = {props.affinity}
+                hp = {props.hp}
+                energy = {props.energy}> 
+                </LineCard>
+            );
 
-let display="";
-switch(props.display_type){
-    case SHORT_LABEL:
-        display = (                
-            <lineCard 
-            id = {current_card.id}
-            name = {current_card.name}
-            description = {current_card.description}
-            price = {current_card.price}
-            family = {current_card.family}
-            affinity = {current_card.affinity}
-            hp = {current_card.hp}
-            energy = {current_card.energy}> 
-            </lineCard>
-        );
-
-        break;
-    case FULL_LABEL:
-        display=(                
-            <simpleCard 
-                id = {current_card.id}
-                img_src = {current_card.img_src}
-                name = {current_card.name}
-                description = {current_card.description}
-                price = {current_card.price}
-                family = {current_card.family}
-                affinity = {current_card.affinity}
-                hp = {current_card.hp}
-                energy = {current_card.energy}> 
-            </simpleCard>
-        );
-        break;
-    default:
-        display=(<h4>No Display Available</h4>);
-}
+            break;
+        case FULL_LABEL:
+            display=(                
+                <SimpleCard 
+                    id = {props.id}
+                    img_src = {props.img_src}
+                    name = {props.name}
+                    description = {props.description}
+                    price = {props.price}
+                    family = {props.family}
+                    affinity = {props.affinity}
+                    hp = {props.hp}
+                    energy = {props.energy}> 
+                </SimpleCard>
+            );
+            break;
+        default:
+            display=(<h4>No Display Available</h4>);
+    }
     return display;
+}
+
+export default Card;

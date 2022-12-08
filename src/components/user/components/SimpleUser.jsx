@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { User, Image } from 'semantic-ui-react'
 
  export const SimpleUser=(props) =>{
@@ -24,3 +24,4 @@ import { User, Image } from 'semantic-ui-react'
 
         );
     }
+*/

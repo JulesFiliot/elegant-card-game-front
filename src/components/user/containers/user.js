@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import {UserSimpleDisplay} from '../components/UserSimpleDisplay';
 import {UserShortDisplay} from '../components/UserShortDisplay';
 import { current } from '@reduxjs/toolkit';
@@ -11,10 +11,10 @@ const FULL_LABEL='FULL';
 const SHORT_LABEL='SHORT';
 const SHORT_SHORT_LABEL='SHORT_SHORT';
 
-/*
+
  export const User=(props)=> {
     let current_card = useSelector(state => state.userReducer.user);
-*/
+
 
 
     let display="";
@@ -58,4 +58,4 @@ const SHORT_SHORT_LABEL='SHORT_SHORT';
         default:
             display=(<h4>No Display Available</h4>);
     }
-        return display;
+        return display;*/
