@@ -6,7 +6,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <SimpleCard img_src='https://cdn.icon-icons.com/icons2/896/PNG/512/pokemon_go_play_game_cinema_film_movie_icon-icons.com_69163.png' name="coucou" price={1000} />
+      <SimpleCard id={1} img_src='https://react.semantic-ui.com/images/avatar/large/matthew.png' name="coucou" price={1000} energy={10} family='simians' affinity="normal" hp={10} description="Un simple humain, il a l'air plutôt faible." />
     </div>
   );
 }
