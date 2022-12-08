@@ -1,61 +1,54 @@
-/*import React from 'react';
-import {UserSimpleDisplay} from '../components/UserSimpleDisplay';
-import {UserShortDisplay} from '../components/UserShortDisplay';
-import { current } from '@reduxjs/toolkit';
-import { SimpleUser } from '../components/SimpleUser';
+import React from 'react';
+import UserMoney from '../components/UserMoney'
+import UserAvatar from '../components/UserAvatar'
+import HomeButton from '../components/HomeButton'
 //import { useDispatch, useSelector } from "react-redux";
 
 
 
-const FULL_LABEL='FULL';
-const SHORT_LABEL='SHORT';
-const SHORT_SHORT_LABEL='SHORT_SHORT';
+const MONEY='MONEY';
+const AVATAR='AVATAR';
+const HOME='HOME'
 
 
- export const User=(props)=> {
-    let current_card = useSelector(state => state.userReducer.user);
+const User=(props)=> {
+//    let current_card = useSelector(state => state.userReducer.user);
 
 
 
     let display="";
     switch(props.display_type){
-        case SHORT_LABEL:
+        case AVATAR:
             display = (                
-                <SimpleUser 
-                    surname = {current_card.surname}
-                    lastname = {current_card.lastname}
-                    img = {current_card.img}
-                    money = {current_card.money}> 
-                </SimpleUser>
+                <UserAvatar 
+                    surname = {props.surname}
+                    lastname = {props.lastname}
+                    img_src = {props.img_src}
+                    id = {props.id}
+                    >
+                </UserAvatar>
             );
             break;
 
-        case FULL_LABEL:
+        case MONEY:
             display=(                
-                <UserSimpleDisplay 
-                    id = {current_card.id}
-                    img_src = {/public/favicon.ico}
-                    surname = {current_card.surname}
-                    lastname = {current_card.lastname}
-                    login = {current_card.login}
-                    pwd = {current_card.pwd}
-                    money = {current_card.money}
-                    img = {current_card.img}> 
-                </UserSimpleDisplay>
+                <UserMoney
+                    solde = {props.solde}>
+                </UserMoney>
             );
             break;
 
-        case SHORT_SHORT_LABEL:
+        case HOME:
             display = (                
-                <UserShortDisplay 
-                    surname = {current_user.surname}
-                    img = {current_user.img}
-                    id = {current_user.id}>
-                </UserShortDisplay>
+                <UserAvatar 
+                    >
+                </UserAvatar>
             );
-
             break;
+        
         default:
             display=(<h4>No Display Available</h4>);
     }
-        return display;*/
+        return display;
+}
+export default User
