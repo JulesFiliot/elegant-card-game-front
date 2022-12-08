@@ -3,7 +3,7 @@ import SimpleCard from '../components/SimpleCard';
 import LineCard from '../components/LineCard';
 //import { useDispatch, useSelector } from "react-redux";
 
-
+<user display_type="MONEY"></user>
 
 const FULL_LABEL='FULL';
 const SHORT_LABEL='SHORT';
@@ -16,14 +16,14 @@ const SHORT_LABEL='SHORT';
         case SHORT_LABEL:
             display = (                
                 <LineCard 
-                id = {props.id}
-                name = {props.name}
-                description = {props.description}
-                price = {props.price}
-                family = {props.family}
-                affinity = {props.affinity}
-                hp = {props.hp}
-                energy = {props.energy}> 
+                id = {props.data.id}
+                name = {props.data.name}
+                description = {props.data.description}
+                price = {props.data.price}
+                family = {props.data.family}
+                affinity = {props.data.affinity}
+                hp = {props.data.hp}
+                energy = {props.data.energy}> 
                 </LineCard>
             );
 
@@ -31,15 +31,15 @@ const SHORT_LABEL='SHORT';
         case FULL_LABEL:
             display=(                
                 <SimpleCard 
-                    id = {props.id}
-                    img_src = {props.img_src}
-                    name = {props.name}
-                    description = {props.description}
-                    price = {props.price}
-                    family = {props.family}
-                    affinity = {props.affinity}
-                    hp = {props.hp}
-                    energy = {props.energy}> 
+                    id = {props.data.id}
+                    img_src = {props.data.img_src}
+                    name = {props.data.name}
+                    description = {props.data.description}
+                    price = {props.data.price}
+                    family = {props.data.family}
+                    affinity = {props.data.affinity}
+                    hp = {props.data.hp}
+                    energy = {props.data.energy}> 
                 </SimpleCard>
             );
             break;
