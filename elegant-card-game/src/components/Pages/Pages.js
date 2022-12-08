@@ -4,9 +4,9 @@ export const Pages = (props)=> {
     return (
         <div>
             <h5>Pages</h5>
-            <button class="btn btn-primary" onClick={()=>props.handleSetPage('Buy')}>Buy</button>
-            <button class="btn btn-primary" onClick={()=>props.handleSetPage('Sell')}>Sell</button>
-            <button class="btn btn-primary" onClick={()=>props.handleSetPage('Play')}>Play</button>
+            <button class="btn btn-primary" onClick={()=>props.handleSetPage('buy')}>Buy</button>
+            <button class="btn btn-primary" onClick={()=>props.handleSetPage('sell')}>Sell</button>
+            <button class="btn btn-primary" onClick={()=>props.handleSetPage('play')}>Play</button>
         </div>
     )
 }
