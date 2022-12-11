@@ -9,7 +9,11 @@ Antonin Borel-Giraud, Jules Filiot, Marouane Nili, Matthieu Gourdon, Pierre Cruv
 Antonin Borel-Giraud, Matthieu Gourdon et Pierre Cruveiller se sont majoritairement focalisés sur le développement du FrontEnd et Jules Filiot et Marouane Nili sur le BackEnd. La partie théorique à été divisée et effectuée par l'ensemble de l'équipe.
 
 ## Notre projet est accessible au lien suivant : 
-https://gitlab.com/PierreCruveiller/elegant-card-game/-/tree/main
+Front End
+- https://gitlab.com/PierreCruveiller/elegant-card-game/-/tree/main
+
+Back End
+- https://gitlab.com/JulesFiliot/elegant-card-game-server
 
 ## Dans le cadre de notre projet, nous avons réalisé les éléments suivants : 
 ### Phase A
