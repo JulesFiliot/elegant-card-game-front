@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import { useEffect, useState } from 'react';
-import { Pages } from './components/Pages/Pages';
+//import { Pages } from './components/Pages/Pages';
 import SimpleCard from './components/card/components/SimpleCard';
 import User from './components/user/containers/user'
 

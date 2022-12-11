@@ -32,7 +32,7 @@ const SHORT_LABEL='SHORT';
             display=(                
                 <SimpleCard 
                     id = {props.data.id}
-                    img_src = {props.data.img_src}
+                    imgUrl = {props.data.imgUrl}
                     name = {props.data.name}
                     description = {props.data.description}
                     price = {props.data.price}

@@ -9,8 +9,8 @@ export const Auth = () => {
     let dispatch = useDispatch();
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(event.target.login.value);
-        console.log(event.target.pwd.value)
+        //console.log(event.target.login.value);
+        //console.log(event.target.pwd.value)
         let context = {
             method: 'POST',
             headers: {
@@ -20,8 +20,9 @@ export const Auth = () => {
         }
           fetch('http://tp.cpe.fr:8083/auth/',context)
           .then(response => {
+            console.log("ooo:",response.status)
             if (response.status == '200'){
-                alert('good')
+                //alert('good')
                 return response.json()
 //                console.log(response.json())
             } else {
@@ -36,7 +37,7 @@ export const Auth = () => {
             }
             fetch('http://tp.cpe.fr:8083/user/'+response,context).then(
                 response => {
-                    console.log('usrfetch')
+                    //console.log('usrfetch')
                     if (response.status == '200'){
                         return response.json()
                     } else {
@@ -45,8 +46,8 @@ export const Auth = () => {
                 }
             )
             .then((response) => {
-                alert(response.login);
-                console.log(response.login)
+                //alert(response.login);
+                //console.log(response.login)
 
                 dispatch(userUpdate({id:response.id,username:response.username,account:response.account,cardList:response.cardList,email:response.email,lastName:response.lastName,surName:response.surName}));
                 navigate('/menu');
