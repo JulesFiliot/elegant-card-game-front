@@ -6,7 +6,7 @@ Une entreprise disposant uniquement d’un BackEnd d’application de gestion de
 ## Membre du groupe : 
 Antonin Borel-Giraud, Jules Filiot, Marouane Nili, Matthieu Gourdon, Pierre Cruveiller.
 
-Antonin Borel-Giraud, Matthieu Gourdon et Pierre Cruveiller se sont majoritairement focalisés sur le développement du FrontEnd et Jules Filiot et Marouane Nili sur le BackEnd. La partie théorique à été divisée et éffctuée par l'ensemble de l'équipe.
+Antonin Borel-Giraud, Matthieu Gourdon et Pierre Cruveiller se sont majoritairement focalisés sur le développement du FrontEnd et Jules Filiot et Marouane Nili sur le BackEnd. La partie théorique à été divisée et effectuée par l'ensemble de l'équipe.
 
 ## Notre projet est accessible au lien suivant : 
 https://gitlab.com/PierreCruveiller/elegant-card-game/-/tree/main
