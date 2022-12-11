@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+# Welcome to "Elegant Card Game"
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Une entreprise disposant uniquement d’un BackEnd d’application de gestion de cartes, sous forme monolithique souhaite faire évoluer son application. Ayant entendu parler des approches SOA, cette dernière fait appel à nous afin de transformer son application.
 
-## Available Scripts
 
-In the project directory, you can run:
+## Membre du groupe : 
+Antonin Borel-Giraud, Jules Filiot, Marouane Nili, Matthieu Gourdon, Pierre Cruveiller.
 
-### `npm start`
+Antonin Borel-Giraud, Matthieu Gourdon et Pierre Cruveiller se sont majoritairement focalisés sur le développement du FrontEnd et Jules Filiot et Marouane Nili sur le BackEnd. La partie théorique à été divisée et effectuée par l'ensemble de l'équipe.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Notre projet est accessible au lien suivant : 
+https://gitlab.com/PierreCruveiller/elegant-card-game/-/tree/main
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Dans le cadre de notre projet, nous avons réalisé les éléments suivants : 
+### Phase A
+- Un diagramme de classe du BackEnd monolithique.
 
-### `npm test`
+- Une proposition d'organisation du BackEnd répondant aux exigences du SOA mêlant micro service et ESB.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Un tableau récapitulatif des bus de communication les plus répandus.
 
-### `npm run build`
+### Phase B
+- Un tableau comparatif des principaux Framework FrontEnd existants
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Un découpage du FrontEnd en composant REACTJS
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Une application REACTJS avec les interactions avec le BackEnd
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Phase C
+- Un module permettant à votre BackEnd SpringBoot de mettre à jour les propriétés d’un utilisateur par un BUS de communication
 
-### `npm run eject`
+- Une application indépendante permettant de tester la mise à jour d’un utilisateur par Bus de Communication
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Nous n'avons cependant pas réalisé les éléments suivants :
+- Utilisation de pipelines de Gitlab pour l’Intégration et le Déploiement Continue.
+- Utilisation des composants Material-UI de REACT.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
