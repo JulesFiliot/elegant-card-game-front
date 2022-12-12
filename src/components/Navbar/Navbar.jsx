@@ -32,7 +32,7 @@ const Navbar=(props) =>{
               <div className="nav-link disabled">{user.surName}</div>
             </li>:''
             }
-            {user.account?
+            {user.id?
             <li className="nav-item">
               <div className="nav-link disabled">{user.account} €</div>
             </li>:''

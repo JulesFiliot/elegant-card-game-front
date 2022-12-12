@@ -30,7 +30,7 @@ export const Auth = () => {
             }
         })
         .then((response) => {
-            alert(response)
+            //alert(response)
             //fetch user info thx to id
             context = {
                 method: 'GET'

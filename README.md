@@ -39,3 +39,15 @@ Back End
 - Utilisation de pipelines de Gitlab pour l’Intégration et le Déploiement Continue.
 - Utilisation des composants Material-UI de REACT.
 
+
+
+## Fonctionnalités du FrontEnd
+
+- Page d'authentification (testable avec les credentials 'string' 'string')
+- Navbar
+- Page d'achat de cartes
+- Page de vente de cartes
+
+À étudier:
+- Lorsqu'on rafraichit la page l'utilisateur est déconnecté
+- Améliorer l'affichage du market
