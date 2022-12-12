@@ -1,9 +1,6 @@
 import React from 'react';
 import UserMoney from '../components/UserMoney'
 import UserAvatar from '../components/UserAvatar'
-import HomeButton from '../components/HomeButton'
-//import { useDispatch, useSelector } from "react-redux";
-
 
 
 const MONEY='MONEY';
@@ -12,9 +9,6 @@ const HOME='HOME'
 
 
 const User=(props)=> {
-//    let current_card = useSelector(state => state.userReducer.user);
-
-
 
     let display="";
     switch(props.display_type){

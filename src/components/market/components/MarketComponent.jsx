@@ -6,10 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { userUpdate } from '../../../core/actions';
-//import { Card, Image, Icon } from 'semantic-ui-react'
-//import 'semantic-ui-css/semantic.min.css'
-
-//WIP
 
 
 
@@ -40,17 +36,13 @@ const MarketComponent = (props) => {
                 .then(response => {
                 console.log("ooo:",response.status)
                 if (response.status == '200'){
-                    //alert('good')
                     return response.json()
-        //                console.log(response.json())
                 } else {
                     throw('error, pls try again')
                 }
             })
             .then((response) => {
-                //alert(response)
                 console.log(response)
-                //fetch user info thx to id
                 context = {
                     method: 'GET'
                 }
@@ -72,18 +64,13 @@ const MarketComponent = (props) => {
                 .then(response => {
                 console.log("ooo:",response.status)
                 if (response.status == '200'){
-                    //alert('good')
                     return response.json()
-        //                console.log(response.json())
                 } else {
                     throw('error, pls try again')
                 }
                 
             })
             .then((response) => {
-                //alert(response)
-                //console.log(response)
-                //fetch user info thx to id
                 context = {
                     method: 'GET'
                 }
@@ -109,7 +96,6 @@ const MarketComponent = (props) => {
     function refreshUser() {
         fetch('http://tp.cpe.fr:8083/user/'+user.id,{method: 'GET'}).then(
                 response => {
-                    //console.log('usrfetch')
                     if (response.status == '200'){
                         return response.json()
                     } else {
@@ -118,13 +104,9 @@ const MarketComponent = (props) => {
                 }
             )
             .then((response) => {
-                //alert(response.login);
-                //console.log(response.login)
-
                 dispatch(userUpdate({id:response.id,username:response.username,account:response.account,cardList:response.cardList,email:response.email,lastName:response.lastName,surName:response.surName}));
                 navigate('/menu');
                 alert("Transaction done")
-                //it works, but why info is lost on refresh ? maybe useeffect in main
             })
     }
 
@@ -140,9 +122,7 @@ const MarketComponent = (props) => {
             console.log("ooo:",response.status)
             if (response.status == '200'){
                 refreshUser()
-                //alert('good')
                 return response.json()
-    //                console.log(response.json())
             } else {
                 throw('error, pls try again')
             }
@@ -160,10 +140,8 @@ const MarketComponent = (props) => {
         fetch('http://tp.cpe.fr:8083/store/sell',context).then(response => {
             console.log("ooo:",response.status)
             if (response.status == '200'){
-                //alert('good')
                 refreshUser()
                 return response.json()
-    //                console.log(response.json())
             } else {
                 throw('error, pls try again')
             }

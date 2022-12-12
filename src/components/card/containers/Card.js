@@ -1,7 +1,6 @@
 import React from 'react';
 import SimpleCard from '../components/SimpleCard';
 import LineCard from '../components/LineCard';
-//import { useDispatch, useSelector } from "react-redux";
 
 <user display_type="MONEY"></user>
 
@@ -10,7 +9,6 @@ const SHORT_LABEL='SHORT';
 
 
  const Card=(props)=> {
-    //let current_card = useSelector(state => state.userReducer.user);
     let display="";
     switch(props.display_type){
         case SHORT_LABEL:

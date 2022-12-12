@@ -1,15 +1,8 @@
 import React from 'react';
-//import Nav from 'react-bootstrap/Button';
-import User from '../user/containers/user';
-//import setPage from  '../'
 import 'bootstrap/dist/css/bootstrap.css';
 import { useSelector } from 'react-redux';
-import { Button, Container } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import { Menu } from '../../pages/Menu';
-import { Auth } from '../../pages/Auth';
-import MarketComponent from '../market/components/MarketComponent';
 import { useDispatch } from 'react-redux';
 import { userUpdate } from "../../core/actions"
 

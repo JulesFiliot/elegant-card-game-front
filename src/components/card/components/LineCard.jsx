@@ -12,25 +12,6 @@ import './LineCard.css';
             <div className="col">{affinity}</div>
             <div className="col" style={{ borderRight: 'solid 1px #000000' }}><ul><li>{hp}</li><li>{energy}</li></ul></div>
         </div>
-        
-        /*
-        <Card>
-            <Image src = {props.img_src} wrapped ui = {false} />
-            <Card.Content>
-                <Card.Header>{props.hp} {props.name} {props.energy} </Card.Header>
-                <Card.Description>
-                    {props.description}
-                </Card.Description>
-                <Card.Footer>{props.affinity} {props.family}</Card.Footer>
-            </Card.Content>
-            <Card.Content extra>
-                    <a>
-                        <Icon name = 'money bill alternate outline' />
-                            {props.price} $
-                    </a>
-            </Card.Content>
-        </Card>
-        */
        );
     };
 export default LineCard;
