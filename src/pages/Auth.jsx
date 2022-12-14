@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userUpdate } from '../core/actions';
@@ -29,7 +30,7 @@ export default function Auth() {
         if (response.status === 200) {
           return response.json();
         }
-        throw new Error('error, pls try again');
+        throw new Error('error pls try again');
       })
       .then((response) => {
         context = {
@@ -57,7 +58,7 @@ export default function Auth() {
             navigate('/menu');
           });
       })
-      .catch((error) => alert(error))
+      .catch((error) => toast.error(error.toString()))
       .finally(() => setLoading(false));
   };
   return (

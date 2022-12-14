@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import Card from '../../card/containers/Card';
 
 import { userUpdate } from '../../../core/actions';
@@ -39,7 +40,7 @@ function MarketComponent({ mode }) {
             };
             setCards(response);
           })
-          .catch((error) => alert(error));
+          .catch((error) => toast.error(error.toString()));
       }
     } else if (user.id && mode === 'sell') {
       let context = {
@@ -64,14 +65,18 @@ function MarketComponent({ mode }) {
             const userCards = response.filter((c) => user.cardList.includes(c.id));
             setCards(userCards);
           })
-          .catch((error) => alert(error));
+          .catch((error) => toast.error(error.toString()));
       }
     }
   }, []);
 
-  function refreshUser(isValid) {
+  function refreshUser(isValid, isBuy) {
+    if (!isValid && isBuy) {
+      toast.error('Transaction failed: not enough money');
+      return;
+    }
     if (!isValid) {
-      alert('Transaction failed: not enough money');
+      toast.error('Transaction failed');
       return;
     }
     fetch(`${process.env.REACT_APP_API_URL}/user/${user.id}`, { method: 'GET' }).then(
@@ -93,7 +98,7 @@ function MarketComponent({ mode }) {
           surName: response.surName,
         }));
         navigate('/menu');
-        alert('Transaction done');
+        toast.success('Transaction done');
       });
   }
 
@@ -108,10 +113,10 @@ function MarketComponent({ mode }) {
     fetch(`${process.env.REACT_APP_API_URL}/store/buy`, context)
       .then((response) => {
         if (response.status === 200) return response.text();
-        throw new Error('error, pls try again');
+        throw new Error('error pls try again');
       })
-      .then((data) => refreshUser(data === 'true'))
-      .catch((error) => alert(error));
+      .then((data) => refreshUser(data === 'true', true))
+      .catch((error) => toast.error(error.toString()));
   }
 
   function sellCard(id) {
@@ -122,13 +127,13 @@ function MarketComponent({ mode }) {
       },
       body: JSON.stringify({ user_id: user.id, card_id: id }),
     };
-    fetch(`${process.env.REACT_APP_API_URL}/store/sell`, context).then((response) => {
-      if (response.status === 200) {
-        refreshUser();
-        return response.json();
-      }
-      throw new Error('error, pls try again');
-    }).catch((error) => alert(error));
+    fetch(`${process.env.REACT_APP_API_URL}/store/sell`, context)
+      .then((response) => {
+        if (response.status === 200) return response.text();
+        throw new Error('error pls try again');
+      })
+      .then((data) => refreshUser(data === 'true'))
+      .catch((error) => toast.error(error.toString()));
   }
 
   return (
