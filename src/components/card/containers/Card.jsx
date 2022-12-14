@@ -19,6 +19,9 @@ const Card = (props) => {
           affinity={props.data.affinity}
           hp={props.data.hp}
           energy={props.data.energy}
+          dark={props.dark}
+          header={props.header}
+          onClick={props.onClick}
         />
       );
 
@@ -35,6 +38,7 @@ const Card = (props) => {
           affinity={props.data.affinity}
           hp={props.data.hp}
           energy={props.data.energy}
+          dark={props.dark}
         />
       );
       break;

@@ -1,0 +1,18 @@
+.marketContainer {
+  display: flex;
+  flex-direction: row;
+}
+.marketContainer > .cardTable {
+  display: flex;
+  flex-direction: column;
+}
+.marketContainer > .cardTableContainer {
+  margin: 10px;
+  border: solid 1px #000000;
+  border-left: none;
+  border-right: none;
+  flex-grow: 2;
+}
+.marketContainer > .cardDetailsContainer {
+  flex-grow: 2;
+}
