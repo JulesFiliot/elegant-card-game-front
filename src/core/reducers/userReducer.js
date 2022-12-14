@@ -1,18 +1,16 @@
+/* eslint-disable default-param-last */
+const initState = {
+  user: {},
+};
 
-let initState={
-    user:{}
-}
+const userReducer = (state = initState, action) => {
+  switch (action.type) {
+    case 'UPDATE_USER':
+      return { user: action.obj };
 
-const userReducer = (state=initState,action) =>{
-    console.log(action)
-    switch(action.type){
-        case "UPDATE_USER":
-            return {user:action.obj};
-        
-        default:
-            return state;
-    }
-
-}
+    default:
+      return state;
+  }
+};
 
 export default userReducer;
