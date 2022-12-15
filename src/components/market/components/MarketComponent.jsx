@@ -10,11 +10,11 @@ import './MarketComponent.css';
 function MarketComponent({ mode }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.myUserReducer.user);
-  const [cards, setCards] = useState('');
+  const [cards, setCards] = useState(null);
   const [selectedCard, setSelecedCard] = useState(null);
   const navigate = useNavigate();
 
-  function refreshUser(isValid, isBuy) {
+  function refreshUser(isValid, isBuy = false) {
     if (!isValid && isBuy) {
       toast.error('Transaction failed: not enough money');
       return;
@@ -41,7 +41,7 @@ function MarketComponent({ mode }) {
           lastName: response.lastName,
           surName: response.surName,
         }));
-        navigate('/menu');
+        setSelecedCard(null);
         toast.success('Transaction done');
       });
   }
@@ -80,61 +80,40 @@ function MarketComponent({ mode }) {
       .catch((error) => toast.error(error.toString()));
   }
 
+  const getCards = async () => (new Promise((resolve, reject) => {
+    fetch(`${process.env.REACT_APP_API_URL}/${mode === 'buy' ? 'cards_to_sell' : 'cards'}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          resolve(response.json());
+        }
+        reject(new Error('error, pls try again'));
+      });
+  }));
+
   useEffect(() => {
     if (!user.id) {
       navigate('/auth');
     }
-
     if (user.id && mode === 'buy') {
-      let context = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-      if (!cards) {
-        fetch(`${process.env.REACT_APP_API_URL}/cards_to_sell/`, context)
-          .then((response) => {
-            if (response.status === 200) {
-              return response.json();
-            }
-            throw new Error('error, pls try again');
-          })
-          .then((response) => {
-            context = {
-              method: 'GET',
-            };
-            setCards(response);
-          })
-          .catch((error) => toast.error(error.toString()));
-      }
+      getCards()
+        .then((response) => {
+          setCards(response);
+        })
+        .catch((error) => toast.error(error.toString()));
     } else if (user.id && mode === 'sell') {
-      let context = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-
-      if (!cards) {
-        fetch(`${process.env.REACT_APP_API_URL}/cards/`, context)
-          .then((response) => {
-            if (response.status === 200) {
-              return response.json();
-            }
-            throw new Error('error, pls try again');
-          })
-          .then((response) => {
-            context = {
-              method: 'GET',
-            };
-            const userCards = response.filter((c) => user.cardList.includes(c.id));
-            setCards(userCards);
-          })
-          .catch((error) => toast.error(error.toString()));
-      }
+      getCards()
+        .then((response) => {
+          const userCards = response.filter((c) => user.cardList.includes(c.id));
+          setCards(userCards);
+        })
+        .catch((error) => toast.error(error.toString()));
     }
-  }, []);
+  }, [user]);
 
   return (
     <div className="marketContainer">
@@ -174,8 +153,6 @@ function MarketComponent({ mode }) {
             onClick={() => {
               if (mode === 'buy') buyCard(selectedCard.id);
               else sellCard(selectedCard.id);
-              if (mode === 'buy') buyCard();
-              else sellCard();
             }}
           >
             {' '}
