@@ -16,6 +16,7 @@ export default function Menu() {
       <div>
         <NavLink className="btn btn-primary" to="/buy">Buy</NavLink>
         <NavLink className="btn btn-primary" to="/sell"> Sell</NavLink>
+        <NavLink className="btn btn-primary" to="/fight"> Fight</NavLink>
       </div>
     </Container>
   );

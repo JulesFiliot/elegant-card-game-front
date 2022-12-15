@@ -4,7 +4,7 @@ import 'semantic-ui-css/semantic.min.css';
 import './SimpleCard.css';
 
 function SimpleCard({
-  hp, imgUrl, name, energy, description, price, family, affinity, id,
+  hp, imgUrl, name, energy, description, price, family, affinity, id, hidePrice,
 }) {
   return (
     <Card className="detailedCardContainer">
@@ -33,6 +33,7 @@ function SimpleCard({
           </span>
         </div>
       </Card.Content>
+      {!hidePrice && (
       <Card.Content extra>
         <button className="priceButton" type="button">
           <Icon name="money bill alternate outline" />
@@ -42,6 +43,7 @@ function SimpleCard({
           $
         </button>
       </Card.Content>
+      )}
     </Card>
   );
 }

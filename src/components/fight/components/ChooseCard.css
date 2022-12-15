@@ -1,0 +1,20 @@
+.chooseCardContainer .chosenCards {
+  display: flex;
+  flex-direction: column;
+}
+.chooseCardContainer .chosenCards .title {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+}
+.chooseCardContainer .chosenCards .cardsList {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.cardsList .ui.card.detailedCardContainer {
+  margin-bottom: 0px;
+  margin-top: 0px;
+}

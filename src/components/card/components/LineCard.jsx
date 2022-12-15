@@ -2,7 +2,7 @@ import React from 'react';
 import './LineCard.css';
 
 export default function LineCard({
-  id, name, price, description, family, affinity, hp, energy, dark, header, onClick,
+  id, name, price, description, family, affinity, hp, energy, dark, header, onClick, hidePrice,
 }) {
   return (
     <div
@@ -17,7 +17,7 @@ export default function LineCard({
       <div className="col">
         {description}
       </div>
-      <div className="col">{price}</div>
+      {!hidePrice && (<div className="col">{price}</div>)}
       <div className="col">{family}</div>
       <div className="col">{affinity}</div>
       <div className="col stats" style={{ borderRight: 'solid 1px #000000' }}>

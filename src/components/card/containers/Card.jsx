@@ -22,6 +22,7 @@ const Card = (props) => {
           dark={props.dark}
           header={props.header}
           onClick={props.onClick}
+          hidePrice={props.hidePrice}
         />
       );
 
@@ -39,6 +40,7 @@ const Card = (props) => {
           hp={props.data.hp}
           energy={props.data.energy}
           dark={props.dark}
+          hidePrice={props.hidePrice}
         />
       );
       break;
