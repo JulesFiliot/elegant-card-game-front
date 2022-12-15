@@ -169,12 +169,14 @@ function MarketComponent({ mode }) {
         {selectedCard && (
         <>
           <Card display_type="FULL" data={selectedCard} />
-          <Button onClick={() => {
-            if (mode === 'buy') buyCard(selectedCard.id);
-            else sellCard(selectedCard.id);
-            if (mode === 'buy') buyCard();
-            else sellCard();
-          }}
+          <Button
+            className="actionButton"
+            onClick={() => {
+              if (mode === 'buy') buyCard(selectedCard.id);
+              else sellCard(selectedCard.id);
+              if (mode === 'buy') buyCard();
+              else sellCard();
+            }}
           >
             {' '}
             {mode === 'buy' ? 'Buy' : 'Sell'}
