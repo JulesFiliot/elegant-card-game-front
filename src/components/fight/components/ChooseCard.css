@@ -1,12 +1,23 @@
+.chooseCardContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.marketContainer {
+  width: 100%;
+}
 .chooseCardContainer .chosenCards {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 .chooseCardContainer .chosenCards .title {
   font-size: 18px;
   font-weight: bold;
   text-transform: uppercase;
   text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .chooseCardContainer .chosenCards .cardsList {
   display: flex;
@@ -17,4 +28,38 @@
 .cardsList .ui.card.detailedCardContainer {
   margin-bottom: 0px;
   margin-top: 0px;
+}
+.cardsList .deleteOverlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.chooseCardContainer .btn {
+  border: none;
+  border-radius: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 14px;
+  box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+}
+.chooseCardContainer .btn:hover {
+  opacity: 0.5;
+}
+.chooseCardContainer .fightBtn {
+  background-color: #4fe58b;
+  padding: 15px 35px 15px 35px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.cardsList .deleteOverlay .removeBtn {
+  background-color: rgba(255, 0, 0, 0.297);
+  margin-top: 5px;
+  width: 100px;
+}
+.separator {
+  width: 90vw;
+  height: 1px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.194);
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

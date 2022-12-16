@@ -2,12 +2,26 @@ import React from 'react';
 import './LineCard.css';
 
 export default function LineCard({
-  id, name, price, description, family, affinity, hp, energy, dark, header, onClick, hidePrice,
+  id,
+  name,
+  price,
+  description,
+  family,
+  affinity,
+  hp,
+  energy,
+  dark,
+  header,
+  onClick,
+  hidePrice,
+  disabled,
 }) {
   return (
     <div
-      className={`lineCardContainer${dark ? ' dark' : ''}${header ? ' header' : ''}`}
-      onClick={onClick}
+      className={
+        `lineCardContainer${dark ? ' dark' : ''}${header ? ' header' : ''}${disabled ? ' disabled' : ''}`
+      }
+      onClick={disabled ? null : onClick}
       onKeyDown={onClick}
       role="button"
       tabIndex={0}

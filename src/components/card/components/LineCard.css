@@ -24,11 +24,15 @@
 .lineCardContainer.dark {
     background-color: #0d6dfd27;
 }
+.lineCardContainer.disabled {
+    cursor: default;
+    background-color: rgba(255, 0, 0, 0.297);
+}
 .lineCardContainer.header {
     background-color: #0d6dfd;
     color: #ffffff;
     cursor: default;
 }
-.lineCardContainer.header:hover {
+.lineCardContainer.header:hover, .lineCardContainer.disabled:hover {
     opacity: 1;
 }

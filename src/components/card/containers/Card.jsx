@@ -23,6 +23,7 @@ const Card = (props) => {
           header={props.header}
           onClick={props.onClick}
           hidePrice={props.hidePrice}
+          disabled={props.disabled}
         />
       );
 
