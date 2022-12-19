@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 import toast from 'react-hot-toast';
 import Card from '../../card/containers/Card';
 import '../../market/components/MarketComponent.css';
 import './ChooseCard.css';
+import { setFightCards } from '../../../core/actions';
 
-export default function ChooseCard() {
+export default function ChooseCard({ setCurrentComponent, components }) {
+  const dispatch = useDispatch();
   const userCardsIds = useSelector((state) => state.myUserReducer.user.cardList);
   const [selectedCard, setSelecedCard] = useState(null);
   const [cards, setCards] = useState(null);
@@ -40,7 +42,14 @@ export default function ChooseCard() {
     setChosenCards(chosenCards.filter((c) => c.id !== card.id));
   };
 
+  const startFight = () => {
+    dispatch(setFightCards(chosenCards));
+    setCurrentComponent(components.wait);
+    setChosenCards([]);
+  };
+
   useEffect(() => {
+    console.log('in init choose cards');
     getCards()
       .then((response) => {
         const userCards = response.filter((c) => userCardsIds.includes(c.id));
@@ -49,17 +58,14 @@ export default function ChooseCard() {
       .catch((error) => toast.error(error.toString()));
   }, [userCardsIds]);
 
-  useEffect(() => () => { console.log('LEAVING'); }, []);
-
   return (
     <div className="chooseCardContainer">
       <div className="chosenCards">
         <div className="title">chosen cards</div>
         <div className="cardsList">
           {chosenCards.length ? chosenCards.map((c) => (
-            <div className="deleteOverlay">
+            <div className="deleteOverlay" key={c.id}>
               <Card
-                key={c.id}
                 display_type="FULL"
                 data={c}
                 hidePrice
@@ -78,7 +84,13 @@ export default function ChooseCard() {
       <div className="separator" />
       {chosenCards.length === 5 && (
         <>
-          <button type="button" className="btn fightBtn">START FIGHT</button>
+          <button
+            type="button"
+            className="btn fightBtn"
+            onClick={() => startFight()}
+          >
+            START FIGHT
+          </button>
           <div className="separator" />
         </>
       )}

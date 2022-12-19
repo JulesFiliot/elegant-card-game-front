@@ -21,6 +21,14 @@
 .lineCardContainer > .col.stats {
     flex-direction: column;
 }
+.lineCardContainer > .col.desc {
+    display: block;
+    text-align: center;
+    padding-top: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
 .lineCardContainer.dark {
     background-color: #0d6dfd27;
 }

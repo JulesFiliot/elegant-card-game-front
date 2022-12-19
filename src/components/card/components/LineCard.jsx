@@ -28,7 +28,7 @@ export default function LineCard({
     >
       <div className="col">{id}</div>
       <div className="col">{name}</div>
-      <div className="col">
+      <div className="col desc">
         {description}
       </div>
       {!hidePrice && (<div className="col">{price}</div>)}

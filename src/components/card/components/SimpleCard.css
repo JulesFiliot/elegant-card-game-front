@@ -1,6 +1,13 @@
 .detailedCardContainer {
   width: 270px !important;
 }
+.detailedCardContainer .coverImg {
+  max-height: 272px;
+}
+.detailedCardContainer .coverImg img {
+  max-height: 272px;
+  object-fit: cover;
+}
 .detailedCardContainer .description {
   display: flex;
   flex-direction: column;

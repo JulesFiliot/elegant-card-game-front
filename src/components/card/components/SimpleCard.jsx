@@ -8,7 +8,7 @@ function SimpleCard({
 }) {
   return (
     <Card className="detailedCardContainer">
-      <Image src={imgUrl} wrapped ui={false} />
+      <Image className="coverImg" src={imgUrl} wrapped ui={false} />
       <Card.Content>
         <div className="headerContent">
           <span>{name}</span>
