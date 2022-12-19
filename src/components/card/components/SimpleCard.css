@@ -1,12 +1,21 @@
 .detailedCardContainer {
   width: 270px !important;
 }
+.detailedCardContainer.tiny {
+  width: 200px !important;
+}
 .detailedCardContainer .coverImg {
   max-height: 272px;
+}
+.detailedCardContainer .coverImg.tiny {
+  max-height: 150px;
 }
 .detailedCardContainer .coverImg img {
   max-height: 272px;
   object-fit: cover;
+}
+.detailedCardContainer .coverImg.tiny img {
+  max-height: 150px;
 }
 .detailedCardContainer .description {
   display: flex;

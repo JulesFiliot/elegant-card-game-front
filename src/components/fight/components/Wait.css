@@ -1,0 +1,34 @@
+.waitingContainer {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.waitingContainer .btn {
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+  width: 100px;
+}
+.waitingContainer .btn:hover {
+  opacity: 0.5;
+}
+.waitingContainer .btn.removeBtn {
+  background-color: rgba(255, 0, 0, 0.297);
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+.waitingContainer .title {
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+.waitingContainer .giphy-embed {
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+}
+.waitingContainer .separator {
+  width: 60vw;
+  margin-bottom: 20px;
+}

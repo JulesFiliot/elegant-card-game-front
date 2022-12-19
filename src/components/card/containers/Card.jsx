@@ -1,9 +1,11 @@
 import React from 'react';
 import SimpleCard from '../components/SimpleCard';
 import LineCard from '../components/LineCard';
+import BattleCard from '../components/BattleCard';
 
 const FULL_LABEL = 'FULL';
 const SHORT_LABEL = 'SHORT';
+const BATTLE_CARD = 'BATTLE';
 
 const Card = (props) => {
   let display = '';
@@ -26,7 +28,6 @@ const Card = (props) => {
           disabled={props.disabled}
         />
       );
-
       break;
     case FULL_LABEL:
       display = (
@@ -42,6 +43,25 @@ const Card = (props) => {
           energy={props.data.energy}
           dark={props.dark}
           hidePrice={props.hidePrice}
+        />
+      );
+      break;
+    case BATTLE_CARD:
+      display = (
+        <BattleCard
+          id={props.data.id}
+          imgUrl={props.data.imgUrl}
+          name={props.data.name}
+          description={props.data.description}
+          price={props.data.price}
+          family={props.data.family}
+          affinity={props.data.affinity}
+          hp={props.data.hp}
+          energy={props.data.energy}
+          dark={props.dark}
+          hidePrice={props.hidePrice}
+          onClick={props.onClick}
+          selected={props.selected}
         />
       );
       break;

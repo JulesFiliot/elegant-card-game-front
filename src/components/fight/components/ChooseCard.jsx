@@ -49,7 +49,6 @@ export default function ChooseCard({ setCurrentComponent, components }) {
   };
 
   useEffect(() => {
-    console.log('in init choose cards');
     getCards()
       .then((response) => {
         const userCards = response.filter((c) => userCardsIds.includes(c.id));
