@@ -6,6 +6,17 @@
   background-color: white;
   border: 1px solid black;
 }
+.chat-panel .chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid black;
+  font-size: 15px;
+}
+.chat-panel .chat-header .username {
+  font-weight: bold;
+}
 
 .chat-panel ul {
   list-style: none;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Battle from './components/Battle';
 import ChooseCard from './components/ChooseCard';
 import Wait from './components/Wait';
@@ -6,8 +6,6 @@ import Wait from './components/Wait';
 export default function Fight() {
   const components = { chooseCard: 'chooseCard', wait: 'wait', battle: 'battle' };
   const [currentComponent, setCurrentComponent] = useState(components.chooseCard);
-
-  useEffect(() => console.log({ currentComponent }), [currentComponent]);
 
   return (
     <>

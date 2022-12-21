@@ -8,6 +8,7 @@ import './Battle.css';
 
 export default function Battle(/* { setCurrentComponent, components } */) {
   const myFightCards = useSelector((state) => state.myUserReducer.fightCards);
+  const me = useSelector((state) => state.myUserReducer.user);
   const [mySelectedCard, setMySelectedCard] = useState(null);
   const [opponentSelectedCard, setOpponentSelectedCard] = useState(null);
 
@@ -19,7 +20,14 @@ export default function Battle(/* { setCurrentComponent, components } */) {
   return (
     <div className="card-battle-arena">
       <div className="chat-panel-container">
-        <ChatPanel otherUser="random_user" />
+        <ChatPanel
+          user1={me}
+          user2={me.surName === 'supercool_user2' ? {
+            id: 16, email: null, lastName: 'family_cool', surName: 'supercool_user2_opponent',
+          } : {
+            id: 6, email: null, lastName: 'family_cool', surName: 'supercool_user2',
+          }}
+        />
       </div>
 
       <div className="player-cards">
@@ -47,7 +55,7 @@ export default function Battle(/* { setCurrentComponent, components } */) {
           <button className="btn btn-primary attack" type="submit" onClick={() => endTurn()}>
             End turn
             {' '}
-            <Icon name="x icon" />
+            <Icon className="x icon" />
           </button>
           <button className="btn btn-primary attack" type="submit">
             Attack

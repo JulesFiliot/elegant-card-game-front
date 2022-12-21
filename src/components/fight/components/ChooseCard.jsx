@@ -42,6 +42,17 @@ export default function ChooseCard({ setCurrentComponent, components }) {
     setChosenCards(chosenCards.filter((c) => c.id !== card.id));
   };
 
+  const getRandomCards = (count) => {
+    const cardsCopy = [...cards];
+    const randomCards = [];
+    for (let i = 0; i < count; i += 1) {
+      const rdIndex = Math.floor(Math.random() * cardsCopy.length);
+      randomCards.push(cardsCopy[rdIndex]);
+      cardsCopy.splice(rdIndex, 1);
+    }
+    return randomCards;
+  };
+
   const startFight = () => {
     dispatch(setFightCards(chosenCards));
     setCurrentComponent(components.wait);
@@ -77,7 +88,20 @@ export default function ChooseCard({ setCurrentComponent, components }) {
                 REMOVE
               </button>
             </div>
-          )) : (<div>PLEASE SELECT 5 CARDS</div>)}
+          )) : (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <span>PLEASE SELECT 5 CARDS</span>
+              <span style={{ marginTop: '5px', marginBottom: '5px' }}>OR</span>
+              <button
+                className="btn btn-primary"
+                type="button"
+                style={{ width: '120px', paddingTop: '5px', paddingBottom: '5px' }}
+                onClick={() => setChosenCards(getRandomCards(5))}
+              >
+                Choose for me
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className="separator" />
