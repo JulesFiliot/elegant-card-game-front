@@ -16,11 +16,11 @@ export default function Register() {
       pwd: event.target.pwd.value,
       lastName: event.target.lastname.value,
       surName: event.target.surname.value,
-      account: 1000000000000,
+      account: 100000,
     };
 
     if (!payload.login || !payload.pwd || !payload.lastName || !payload.surName) {
-      toast.error('Error pls fill all fields');
+      toast.error('Error please fill all fields');
       setLoading(false);
       return;
     }

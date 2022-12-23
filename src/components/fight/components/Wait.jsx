@@ -11,19 +11,18 @@ export default function Wait({ setCurrentComponent, components }) {
   const cancelSearch = () => {
     disptach(setFightCards([]));
     setCurrentComponent(components.chooseCard);
-    // cancel opponent search + toast => do this in function
+    // todo cancel opponent search + toast => do this in function
   };
 
   const handleBeforeUnload = () => {
+    console.log('before unload');
     cancelSearch();
+    window.removeEventListener('beforeunload', handleBeforeUnload);
   };
 
   useEffect(() => console.log({ fightCards }), [fightCards]);
   useEffect(() => {
     window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
   }, []);
 
   return (
@@ -52,6 +51,7 @@ export default function Wait({ setCurrentComponent, components }) {
         onClick={(e) => {
           e.preventDefault();
           setCurrentComponent(components.battle);
+          window.removeEventListener('beforeunload', handleBeforeUnload);
         }}
       >
         go to fight arena | TO DELETE

@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 50px;
+    height: 80px;
 
 }
 .lineCardContainer:hover {
@@ -24,7 +24,7 @@
 .lineCardContainer > .col.desc {
     display: block;
     text-align: center;
-    padding-top: 14px;
+    padding-top: 29px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; 
@@ -40,6 +40,10 @@
     background-color: #0d6dfd;
     color: #ffffff;
     cursor: default;
+    height: 50px;
+}
+.lineCardContainer.header .col.desc {
+    padding-top: 14px;
 }
 .lineCardContainer.header:hover, .lineCardContainer.disabled:hover {
     opacity: 1;

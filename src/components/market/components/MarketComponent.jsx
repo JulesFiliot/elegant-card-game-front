@@ -57,7 +57,7 @@ function MarketComponent({ mode }) {
     fetch(`${process.env.REACT_APP_API_URL}/store/buy`, context)
       .then((response) => {
         if (response.status === 200) return response.text();
-        throw new Error('error pls try again');
+        throw new Error('please try again');
       })
       .then((data) => refreshUser(data === 'true', true))
       .catch((error) => toast.error(error.toString()));
@@ -74,7 +74,7 @@ function MarketComponent({ mode }) {
     fetch(`${process.env.REACT_APP_API_URL}/store/sell`, context)
       .then((response) => {
         if (response.status === 200) return response.text();
-        throw new Error('error pls try again');
+        throw new Error('please try again');
       })
       .then((data) => refreshUser(data === 'true'))
       .catch((error) => toast.error(error.toString()));
@@ -91,7 +91,7 @@ function MarketComponent({ mode }) {
         if (response.status === 200) {
           resolve(response.json());
         }
-        reject(new Error('error, pls try again'));
+        reject(new Error('error, please try again'));
       });
   }));
 

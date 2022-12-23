@@ -4,7 +4,7 @@ import 'semantic-ui-css/semantic.min.css';
 import './SimpleCard.css';
 
 function SimpleCard({
-  hp, imgUrl, name, energy, description, price, family, affinity, id, hidePrice,
+  hp, imgUrl, name, energy, description, price, family, affinity, id, hidePrice, defence, attack,
 }) {
   return (
     <Card className="detailedCardContainer">
@@ -19,18 +19,12 @@ function SimpleCard({
           <span>{description}</span>
           <div className="separator" />
           <span style={{ marginBottom: '5px' }}>STATS</span>
-          <span>
-            {`HP: ${hp}`}
-          </span>
-          <span>
-            {`Energy: ${energy}`}
-          </span>
-          <span>
-            {`Family: ${family}`}
-          </span>
-          <span>
-            {`Affinity: ${affinity}`}
-          </span>
+          <span>{`HP: ${hp}`}</span>
+          <span>{`Energy: ${energy}`}</span>
+          <span>{`Attack: ${attack}`}</span>
+          <span>{`Defence: ${defence}`}</span>
+          <span>{`Family: ${family}`}</span>
+          <span>{`Affinity: ${affinity}`}</span>
         </div>
       </Card.Content>
       {!hidePrice && (

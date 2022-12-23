@@ -19,6 +19,8 @@ const Card = (props) => {
           price={props.data.price}
           family={props.data.family}
           affinity={props.data.affinity}
+          defence={props.data.defence}
+          attack={props.data.attack}
           hp={props.data.hp}
           energy={props.data.energy}
           dark={props.dark}
@@ -41,6 +43,8 @@ const Card = (props) => {
           affinity={props.data.affinity}
           hp={props.data.hp}
           energy={props.data.energy}
+          defence={props.data.defence}
+          attack={props.data.attack}
           dark={props.dark}
           hidePrice={props.hidePrice}
         />
@@ -56,6 +60,8 @@ const Card = (props) => {
           price={props.data.price}
           family={props.data.family}
           affinity={props.data.affinity}
+          defence={props.data.defence}
+          attack={props.data.attack}
           hp={props.data.hp}
           energy={props.data.energy}
           dark={props.dark}

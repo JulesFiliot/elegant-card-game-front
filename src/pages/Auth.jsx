@@ -32,7 +32,7 @@ export default function Auth() {
         if (response.status === 200) {
           return response.json();
         }
-        throw new Error('error pls try again');
+        throw new Error('please try again');
       })
       .then((response) => {
         context = {

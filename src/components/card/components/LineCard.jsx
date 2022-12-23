@@ -10,6 +10,8 @@ export default function LineCard({
   affinity,
   hp,
   energy,
+  defence,
+  attack,
   dark,
   header,
   onClick,
@@ -37,16 +39,10 @@ export default function LineCard({
       <div className="col stats" style={{ borderRight: 'solid 1px #000000' }}>
         {!header ? (
           <>
-            <span>
-              HP:
-              {' '}
-              {hp}
-            </span>
-            <span>
-              Energy:
-              {' '}
-              {energy}
-            </span>
+            <span>{`HP: ${hp}`}</span>
+            <span>{`Energy: ${energy}`}</span>
+            <span>{`Defence: ${defence}`}</span>
+            <span>{`Attack: ${attack}`}</span>
           </>
         ) : (<span>{hp}</span>)}
       </div>

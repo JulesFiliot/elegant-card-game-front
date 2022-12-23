@@ -10,6 +10,7 @@ import { setFightCards } from '../../../core/actions';
 export default function ChooseCard({ setCurrentComponent, components }) {
   const dispatch = useDispatch();
   const userCardsIds = useSelector((state) => state.myUserReducer.user.cardList);
+  const fightCards = useSelector((state) => state.myUserReducer.fightCards);
   const [selectedCard, setSelecedCard] = useState(null);
   const [cards, setCards] = useState(null);
   const [chosenCards, setChosenCards] = useState([]);
@@ -25,7 +26,7 @@ export default function ChooseCard({ setCurrentComponent, components }) {
         if (response.status === 200) {
           resolve(response.json());
         }
-        reject(new Error('error, pls try again'));
+        reject(new Error('error, please try again'));
       });
   }));
 
@@ -67,6 +68,14 @@ export default function ChooseCard({ setCurrentComponent, components }) {
       })
       .catch((error) => toast.error(error.toString()));
   }, [userCardsIds]);
+
+  useEffect(() => {
+    if (fightCards && fightCards.length) {
+      setChosenCards(fightCards);
+    } else {
+      setChosenCards([]);
+    }
+  }, [fightCards]);
 
   return (
     <div className="chooseCardContainer">

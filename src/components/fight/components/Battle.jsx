@@ -23,9 +23,9 @@ export default function Battle(/* { setCurrentComponent, components } */) {
         <ChatPanel
           user1={me}
           user2={me.surName === 'supercool_user2' ? {
-            id: 16, email: null, lastName: 'family_cool', surName: 'supercool_user2_opponent',
+            id: 14, email: null, lastName: 'family_cool', surName: 'supercool_user2_opponent',
           } : {
-            id: 6, email: null, lastName: 'family_cool', surName: 'supercool_user2',
+            id: 8, email: null, lastName: 'family_cool', surName: 'supercool_user2',
           }}
         />
       </div>
