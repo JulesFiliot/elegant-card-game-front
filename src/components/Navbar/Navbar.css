@@ -1,0 +1,44 @@
+.navbarContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  height: 5rem;
+  background-color: #fff;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+}
+.navbarContainer .navbarTitle {
+  padding: 20px;
+  color: white;
+  font-size: 36px;
+  text-align: center;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to right, purple, blue);
+  background-clip: unset;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.navbarContainer .userInfo {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to right, blue, purple);
+  background-clip: unset;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+.navbarContainer .navMenu {
+  margin-left: auto;
+  margin-right: 30px;
+}
+.navbarContainer .navMenu .btn {
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 100px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
