@@ -1,0 +1,10 @@
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+}
+.loginContainer .title {
+  font-size: 2rem;
+  font-weight: 600;
+}

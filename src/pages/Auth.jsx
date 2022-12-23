@@ -4,6 +4,8 @@ import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userUpdate } from '../core/actions';
+import CredentialsForms from '../components/fight/components/CredentialsForm';
+import './Auth.css';
 
 export default function Auth() {
   const navigate = useNavigate();
@@ -62,16 +64,22 @@ export default function Auth() {
       .finally(() => setLoading(false));
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-3">
-        <label htmlFor="login" className="form-label">Login</label>
-        <input disabled={loading} type="text" className="form-control" id="login" aria-describedby="loginHelp" />
-      </div>
-      <div className="mb-3">
-        <label htmlFor="pwd" className="form-label">Password</label>
-        <input disabled={loading} type="password" className="form-control" id="pwd" />
-      </div>
-      <button disabled={loading} type="submit" className="btn btn-primary">Submit</button>
-    </form>
+    <div className="loginContainer">
+      <h1 className="title">Login</h1>
+      <CredentialsForms
+        handleSubmit={handleSubmit}
+        loading={loading}
+        extraActions={(
+          <button
+            disabled={loading}
+            type="button"
+            onClick={() => navigate('/register')}
+            className="btn btn-outline-primary"
+          >
+            No account? Register!
+          </button>
+        )}
+      />
+    </div>
   );
 }

@@ -7,6 +7,7 @@ import Auth from './pages/Auth';
 import MarketComponent from './components/market/components/MarketComponent';
 import Navbar from './components/Navbar/Navbar';
 import Fight from './components/fight/Fight';
+import Register from './pages/Register';
 
 export default function Main() {
   return (
@@ -32,6 +33,7 @@ export default function Main() {
                 )}
             />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/fight" element={<Fight />} />
           </Routes>
         </div>
