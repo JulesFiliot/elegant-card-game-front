@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFightCards } from '../../../core/actions';
 import Loader from '../../card/components/Loader';
@@ -6,6 +7,7 @@ import './Wait.css';
 
 export default function Wait({ setCurrentComponent, components }) {
   const disptach = useDispatch();
+  const user = useSelector((state) => state.myUserReducer.user);
   const fightCards = useSelector((state) => state.myUserReducer.fightCards);
 
   const cancelSearch = () => {
@@ -23,6 +25,19 @@ export default function Wait({ setCurrentComponent, components }) {
   useEffect(() => console.log({ fightCards }), [fightCards]);
   useEffect(() => {
     window.addEventListener('beforeunload', handleBeforeUnload);
+
+    const context = {
+      method: 'GET',
+    };
+    fetch(`${process.env.REACT_APP_POOL_URL}/pool/${user.id}`, context)
+      .then((response) => {
+        if (!response.ok) throw new Error('Something went wrong while entring the pool');
+        toast.success('You\'re in the pool, please wait!');
+      })
+      .catch((err) => {
+        setCurrentComponent(components.chooseCard);
+        toast.error(err.toString());
+      });
   }, []);
 
   return (

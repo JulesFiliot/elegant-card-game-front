@@ -17,8 +17,8 @@ function BattleCard({
         </div>
         <div className="separator" />
         <div className="description">
-          <span style={{ marginBottom: '5px' }}>STATS</span>
-          <span>{`HP: ${hp}`}</span>
+          <span style={{ marginBottom: '5px', fontWeight: 'bold' }}>STATS</span>
+          <span style={{ color: 'green' }}>{`HP: ${hp}`}</span>
           <span>{`Energy: ${energy}`}</span>
           <span>{`Attack: ${attack}`}</span>
           <span>{`Defence: ${defence}`}</span>
