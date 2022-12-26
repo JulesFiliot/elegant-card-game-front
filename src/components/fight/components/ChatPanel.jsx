@@ -38,15 +38,28 @@ export default function ChatPanel({ user1, user2 }) {
     });
     socket.on('Reponse', (msg) => setMessages((oldMsg) => [...oldMsg, { content: msg, sender: sender.other }]));
     socket.on('refresh connected users', (users) => setConnectedUsers(users.filter((u) => u.id !== user1.id)));
+    socket.on('conversation', (conv) => {
+      console.log({ conv });
+      if (conv.length) {
+        setMessages(conv.map((c) => (
+          { content: c.content, sender: c.id_emetteur === user1.id ? sender.me : sender.other }
+        )));
+      }
+    });
 
     return () => {
       socket.off('connect');
       socket.off('disconnect');
       socket.off('Reponse');
       socket.off('refresh connected users');
+      socket.off('conversation');
       socket.emit('userDisconnected', user1.id);
     };
   }, []);
+
+  useEffect(() => {
+    socket.emit('getConversation', `${sendTo.id < user1.id ? `${sendTo.id}_${user1.id}` : `${user1.id}_${sendTo.id}`}`);
+  }, [sendTo]);
 
   return (
     <div className="chat-panel">
@@ -59,7 +72,7 @@ export default function ChatPanel({ user1, user2 }) {
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {connectedUsers.map((u) => (
-                <Dropdown.Item onClick={() => setSendTo(u)}>{`${u.surName} ${u.lastName}`}</Dropdown.Item>
+                <Dropdown.Item key={u.id} onClick={() => setSendTo(u)}>{`${u.surName} ${u.lastName}`}</Dropdown.Item>
               ))}
             </Dropdown.Menu>
           </Dropdown>
