@@ -8,8 +8,8 @@ import './ChatPanel.css';
 // user1 sending messages to user2
 // user1 receiving messages from user2
 export default function ChatPanel({ user1, user2 }) {
-  const socket = useContext(SocketContext);
-  const [isConnected, setIsConnected] = useState(socket.connected);
+  const { chatSocket } = useContext(SocketContext);
+  const [isConnected, setIsConnected] = useState(chatSocket.connected);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [sendTo, setSendTo] = useState(user2);
@@ -21,44 +21,53 @@ export default function ChatPanel({ user1, user2 }) {
     if (input === '') return;
     setMessages([...messages, { content: input, sender: sender.me }]);
     setInput('');
-    socket.emit('chat message', JSON.stringify({ message: input, receveur: sendTo.id, emetteur: user1.id }));
+    chatSocket.emit('chat message', JSON.stringify({ message: input, receveur: sendTo.id, emetteur: user1.id }));
   };
 
   useEffect(() => {
     // send user id to server
-    socket.emit('userConnection', user1.id);
+    chatSocket.emit('userConnection', user1.id);
   }, []);
 
   useEffect(() => {
-    socket.on('connect', () => {
+    chatSocket.on('connect', () => {
       setIsConnected(true);
     });
-    socket.on('disconnect', () => {
+    chatSocket.on('disconnect', () => {
       setIsConnected(false);
     });
-    socket.on('Reponse', (msg) => setMessages((oldMsg) => [...oldMsg, { content: msg, sender: sender.other }]));
-    socket.on('refresh connected users', (users) => setConnectedUsers(users.filter((u) => u.id !== user1.id)));
-    socket.on('conversation', (conv) => {
-      console.log({ conv });
+    chatSocket.on('Reponse', (response) => {
+      const data = JSON.parse(response);
+      setMessages((oldMsg) => [
+        ...oldMsg,
+        { content: data.content, sender: sender.other, senderId: data.id_emetteur },
+      ]);
+    });
+    chatSocket.on('refresh connected users', (users) => {
+      setConnectedUsers(users.filter((u) => u.id !== user1.id));
+    });
+    chatSocket.on('conversation', (conv) => {
       if (conv.length) {
         setMessages(conv.map((c) => (
           { content: c.content, sender: c.id_emetteur === user1.id ? sender.me : sender.other }
         )));
+      } else {
+        setMessages([]);
       }
     });
 
     return () => {
-      socket.off('connect');
-      socket.off('disconnect');
-      socket.off('Reponse');
-      socket.off('refresh connected users');
-      socket.off('conversation');
-      socket.emit('userDisconnected', user1.id);
+      chatSocket.off('connect');
+      chatSocket.off('disconnect');
+      chatSocket.off('Reponse');
+      chatSocket.off('refresh connected users');
+      chatSocket.off('conversation');
+      chatSocket.emit('userDisconnected', user1.id);
     };
   }, []);
 
   useEffect(() => {
-    socket.emit('getConversation', `${sendTo.id < user1.id ? `${sendTo.id}_${user1.id}` : `${user1.id}_${sendTo.id}`}`);
+    chatSocket.emit('getConversation', `${sendTo.id < user1.id ? `${sendTo.id}_${user1.id}` : `${user1.id}_${sendTo.id}`}`);
   }, [sendTo]);
 
   return (
@@ -80,18 +89,20 @@ export default function ChatPanel({ user1, user2 }) {
         </div>
       </div>
       <ul>
-        {messages.map((message, i) => {
-          const isSenderMe = message.sender === sender.me;
-          return (
+        {messages
+          .filter((m) => m.senderId === sendTo.id || m.senderId === undefined)
+          .map((message, i) => {
+            const isSenderMe = message.sender === sender.me;
+            return (
             // eslint-disable-next-line react/no-array-index-key
-            <li key={i} className={`${isSenderMe ? 'me' : 'other'}`}>
-              <span className={`user-name${isSenderMe ? ' me' : ' other'}`}>
-                {isSenderMe ? `${user1.surName}:` : `${sendTo.surName}:`}
-              </span>
-              {message.content}
-            </li>
-          );
-        })}
+              <li key={i} className={`${isSenderMe ? 'me' : 'other'}`}>
+                <span className={`user-name${isSenderMe ? ' me' : ' other'}`}>
+                  {isSenderMe ? `${user1.surName}:` : `${sendTo.surName}:`}
+                </span>
+                {message.content}
+              </li>
+            );
+          })}
       </ul>
       <form onSubmit={handleSubmit}>
         <input
