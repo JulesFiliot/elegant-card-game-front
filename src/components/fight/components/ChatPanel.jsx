@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Icon } from 'semantic-ui-react';
+import Dropdown from 'react-bootstrap/Dropdown';
 import { SocketContext } from '../../../context/socket';
 import 'bootstrap/dist/css/bootstrap.css';
 import './ChatPanel.css';
@@ -11,6 +12,8 @@ export default function ChatPanel({ user1, user2 }) {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [sendTo, setSendTo] = useState(user2);
+  const [connectedUsers, setConnectedUsers] = useState([]);
   const sender = { me: 'ME', other: 'OTHER' };
 
   const handleSubmit = (event) => {
@@ -18,7 +21,7 @@ export default function ChatPanel({ user1, user2 }) {
     if (input === '') return;
     setMessages([...messages, { content: input, sender: sender.me }]);
     setInput('');
-    socket.emit('chat message', JSON.stringify({ message: input, receveur: user2.id, emetteur: user1.id }));
+    socket.emit('chat message', JSON.stringify({ message: input, receveur: sendTo.id, emetteur: user1.id }));
   };
 
   useEffect(() => {
@@ -34,24 +37,34 @@ export default function ChatPanel({ user1, user2 }) {
       setIsConnected(false);
     });
     socket.on('Reponse', (msg) => setMessages((oldMsg) => [...oldMsg, { content: msg, sender: sender.other }]));
+    socket.on('refresh connected users', (users) => setConnectedUsers(users.filter((u) => u.id !== user1.id)));
 
     return () => {
       socket.off('connect');
       socket.off('disconnect');
       socket.off('Reponse');
+      socket.off('refresh connected users');
+      socket.emit('userDisconnected', user1.id);
     };
   }, []);
 
   return (
     <div className="chat-panel">
       <div className="chat-header">
-        <div>
-          Chat with
-          {' '}
-          <span className="username">{user2.surName}</span>
+        <div className="info">
+          <span>Chat with</span>
+          <Dropdown className="users-list-dropdown">
+            <Dropdown.Toggle>
+              {`${sendTo.surName}`}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {connectedUsers.map((u) => (
+                <Dropdown.Item onClick={() => setSendTo(u)}>{`${u.surName} ${u.lastName}`}</Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+          <Icon className={`dot circle${isConnected ? ' green' : ' red'}`} />
         </div>
-        {' '}
-        <Icon className={`dot circle${isConnected ? ' green' : ' red'}`} />
       </div>
       <ul>
         {messages.map((message, i) => {
@@ -60,7 +73,7 @@ export default function ChatPanel({ user1, user2 }) {
             // eslint-disable-next-line react/no-array-index-key
             <li key={i} className={`${isSenderMe ? 'me' : 'other'}`}>
               <span className={`user-name${isSenderMe ? ' me' : ' other'}`}>
-                {isSenderMe ? `${user1.surName}:` : `${user2.surName}:`}
+                {isSenderMe ? `${user1.surName}:` : `${sendTo.surName}:`}
               </span>
               {message.content}
             </li>
