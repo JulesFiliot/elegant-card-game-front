@@ -105,6 +105,7 @@ export default function ChooseCard({ setCurrentComponent, components }) {
                 className="btn btn-primary"
                 type="button"
                 style={{ width: '120px', paddingTop: '5px', paddingBottom: '5px' }}
+                disabled={cards && cards.length < 5}
                 onClick={() => setChosenCards(getRandomCards(5))}
               >
                 Choose for me

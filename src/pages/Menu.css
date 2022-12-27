@@ -1,0 +1,31 @@
+.menuContainer {
+  display: flex;
+  padding-top: 90px;
+  padding-left: 48px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.menuContainer .links {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+.menuContainer .links h1 {
+  font-size: 90px;
+  text-decoration: underline;
+  text-decoration-color: #0d6efd;
+}
+.menuContainer .links .btn {
+  background-color: transparent;
+  color: #000000;
+  font-weight: bold;
+  font-size: 60px;
+  padding: 0;
+  border: none;
+  width: 0px;
+}
+.menuContainer .links .btn:hover {
+  text-decoration: underline;
+  text-decoration-color: #0d6efd;
+}

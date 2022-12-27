@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { Container } from 'semantic-ui-react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import './Menu.css';
 
 export default function Menu() {
   const user = useSelector((state) => state.myUserReducer.user);
@@ -12,12 +12,13 @@ export default function Menu() {
     }
   });
   return (
-    <Container>
-      <div>
+    <div className="menuContainer">
+      <div className="links">
+        <h1>Menu</h1>
         <NavLink className="btn btn-primary" to="/buy">Buy</NavLink>
         <NavLink className="btn btn-primary" to="/sell"> Sell</NavLink>
         <NavLink className="btn btn-primary" to="/fight"> Fight</NavLink>
       </div>
-    </Container>
+    </div>
   );
 }
