@@ -1,28 +1,39 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFightCards } from '../../../core/actions';
+import { SocketContext } from '../../../context/socket';
+import { setFightCards, setOpponent } from '../../../core/actions';
 import Loader from '../../card/components/Loader';
 import './Wait.css';
 
 export default function Wait({ setCurrentComponent, components }) {
-  const disptach = useDispatch();
+  const { notifierSocket } = useContext(SocketContext);
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.myUserReducer.user);
   const fightCards = useSelector((state) => state.myUserReducer.fightCards);
 
-  const cancelSearch = () => {
-    disptach(setFightCards([]));
-    setCurrentComponent(components.chooseCard);
-    // todo cancel opponent search + toast => do this in function
+  const cancelSearch = async () => {
+    const context = {
+      method: 'GET',
+    };
+    fetch(`${process.env.REACT_APP_POOL_URL}/cancel_pool/${user.id}`, context)
+      .then((response) => {
+        if (!response.ok) throw new Error('Something went wrong while cancelling opponent search');
+        toast.success('Opponent search cancelled!');
+        dispatch(setFightCards([]));
+        setCurrentComponent(components.chooseCard);
+      })
+      .catch((err) => {
+        toast.error(err.toString());
+      });
   };
 
-  const handleBeforeUnload = () => {
-    console.log('before unload');
+  const handleBeforeUnload = async () => {
     cancelSearch();
     window.removeEventListener('beforeunload', handleBeforeUnload);
   };
 
-  useEffect(() => console.log({ fightCards }), [fightCards]);
+  // joining pool
   useEffect(() => {
     window.addEventListener('beforeunload', handleBeforeUnload);
 
@@ -31,13 +42,52 @@ export default function Wait({ setCurrentComponent, components }) {
     };
     fetch(`${process.env.REACT_APP_POOL_URL}/pool/${user.id}`, context)
       .then((response) => {
-        if (!response.ok) throw new Error('Something went wrong while entring the pool');
+        if (!response.ok) throw new Error('Something went wrong while entering the pool');
         toast.success('You\'re in the pool, please wait!');
       })
       .catch((err) => {
         setCurrentComponent(components.chooseCard);
         toast.error(err.toString());
       });
+  }, []);
+
+  // socket listeners init
+  useEffect(() => {
+    notifierSocket.on('pool:opponentFound', (opponent) => {
+      // todo is it duel_id or duelId inside data?
+      const data = JSON.parse(opponent);
+
+      // set opponent
+      dispatch(setOpponent(data));
+
+      // choose cards
+      const payload = {
+        duelId: data.duel_id,
+        userId: user.id,
+        cardIds: fightCards.map((card) => card.id),
+      };
+      const context = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      };
+      fetch(`${process.env.REACT_APP_DUEL_URL}/choose_cards/`, context)
+        .then((response) => {
+          if (!response.ok) throw new Error('Something went wrong while sending chosen cards to duel server');
+          setCurrentComponent(components.battle);
+          toast.success('Opponent found! Please wait for the duel to start!');
+        })
+        .catch((err) => {
+          setCurrentComponent(components.chooseCard);
+          toast.error(err.toString());
+        });
+    });
+
+    return () => {
+      notifierSocket.off('pool:opponentFound');
+    };
   }, []);
 
   return (
@@ -57,7 +107,7 @@ export default function Wait({ setCurrentComponent, components }) {
       <button
         className="btn removeBtn"
         type="button"
-        onClick={() => setCurrentComponent(components.chooseCard)}
+        onClick={() => cancelSearch()}
       >
         CANCEL
       </button>
@@ -70,6 +120,15 @@ export default function Wait({ setCurrentComponent, components }) {
         }}
       >
         go to fight arena | TO DELETE
+      </button>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          notifierSocket.emit('skipOpponentWait');
+        }}
+      >
+        manually ask for opponent | TO DELETE
       </button>
     </div>
   );

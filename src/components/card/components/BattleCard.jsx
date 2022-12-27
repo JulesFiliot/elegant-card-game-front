@@ -5,10 +5,13 @@ import './SimpleCard.css';
 import './BattleCard.css';
 
 function BattleCard({
-  hp, imgUrl, name, energy, id, selected, onClick, attack, defence,
+  hp, imgUrl, name, energy, id, selected, onClick, attack, defence, isOpponent, disabled,
 }) {
   return (
-    <Card className={`detailedCardContainer tiny battleCard${selected ? ' selected' : ''}`} onClick={onClick}>
+    <Card
+      className={`detailedCardContainer tiny battleCard${selected ? ` selected${isOpponent ? ' opponent' : ''}` : ''}${disabled ? ' disabled' : ''}`}
+      onClick={!disabled ? onClick : null}
+    >
       <Image className="coverImg tiny" src={imgUrl} wrapped ui={false} />
       <Card.Content>
         <div className="headerContent">
@@ -18,7 +21,7 @@ function BattleCard({
         <div className="separator" />
         <div className="description">
           <span style={{ marginBottom: '5px', fontWeight: 'bold' }}>STATS</span>
-          <span style={{ color: '#00a000' }}>{`HP: ${hp}`}</span>
+          <span style={{ color: `${hp <= 0 ? '#fd2f2f' : '#00a000'}` }}>{`HP: ${hp}`}</span>
           <span>{`Energy: ${energy}`}</span>
           <span>{`Attack: ${attack}`}</span>
           <span>{`Defence: ${defence}`}</span>

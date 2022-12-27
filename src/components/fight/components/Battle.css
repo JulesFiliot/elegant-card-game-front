@@ -28,10 +28,29 @@
 }
 .commands .btn {
   height: 40px;
-  width: 130px;
+  width: 145px;
   margin-left: 10px;
   margin-right: 10px;
   font-size: 16px;
+}
+.commands .btn.battleBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.commands .btn.battleBtn .icon {
+  margin-bottom: 6px;
+  margin-left: 5px;
+}
+.commands .btn.battleBtn .loader .spinner {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  border-width: 4px;
+  border-color: #0d5acc;
+  border-top-width: 4px;
+  border-top-color: #ffffff;
 }
 .commands .user-infos {
   width: 300px;

@@ -68,6 +68,8 @@ const Card = (props) => {
           hidePrice={props.hidePrice}
           onClick={props.onClick}
           selected={props.selected}
+          isOpponent={props.isOpponent}
+          disabled={props.disabled}
         />
       );
       break;

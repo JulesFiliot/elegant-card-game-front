@@ -3,12 +3,22 @@
   color: #000000;
   border: 1px solid transparent !important;
 }
+.battleCard.disabled {
+  opacity: 0.5;
+}
 .battleCard.selected {
   border: 1px solid #0d6efd !important;
+}
+.battleCard.battleCard.selected.opponent {
+  border: 1px solid #fd2f2f !important;
 }
 .battleCard:hover {
   cursor: pointer;
   z-index: 5;
   box-shadow: 0 1px 3px 0 #bcbdbd, 0 0 0 1px #d4d4d5;
   transform: translateY(-3px);
+}
+.battleCard.disabled:hover {
+  cursor: default;
+  transform: none;
 }
