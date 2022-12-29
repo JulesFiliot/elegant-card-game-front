@@ -14,6 +14,7 @@ export default function ChatPanel({ user1, user2 }) {
   const [input, setInput] = useState('');
   const [sendTo, setSendTo] = useState(user2);
   const [connectedUsers, setConnectedUsers] = useState([]);
+  const [msgContainerEnd, setMsgContainerEnd] = useState(null);
   const sender = { me: 'ME', other: 'OTHER' };
 
   const handleSubmit = (event) => {
@@ -23,6 +24,10 @@ export default function ChatPanel({ user1, user2 }) {
     setInput('');
     chatSocket.emit('chat message', JSON.stringify({ message: input, receveur: sendTo.id, emetteur: user1.id }));
   };
+
+  useEffect(() => {
+    msgContainerEnd?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   useEffect(() => {
     // send user id to server
@@ -103,6 +108,10 @@ export default function ChatPanel({ user1, user2 }) {
               </li>
             );
           })}
+        <div
+          style={{ float: 'left', clear: 'both' }}
+          ref={(el) => setMsgContainerEnd(el)}
+        />
       </ul>
       <form onSubmit={handleSubmit}>
         <input
