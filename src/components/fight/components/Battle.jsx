@@ -1,25 +1,35 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import { Icon } from 'semantic-ui-react';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import Card from '../../card/containers/Card';
 import ChatPanel from './ChatPanel';
 import 'bootstrap/dist/css/bootstrap.css';
 import './Battle.css';
 import { SocketContext } from '../../../context/socket';
 import Loader from '../../card/components/Loader';
+import { setFightCards } from '../../../core/actions';
 
-export default function Battle(/* { setCurrentComponent, components } */) {
+export default function Battle({ setCurrentComponent, components }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { notifierSocket } = useContext(SocketContext);
   const me = useSelector((state) => state.myUserReducer.user);
   const opponent = useSelector((state) => state.myUserReducer.opponent);
   const myCardsFromReducer = useSelector((state) => state.myUserReducer.fightCards);
   const users = { me: 'ME', opponent: 'OPPONENT' };
+  const [winner, setWinner] = useState(null);
+  const [showGameOverModal, setShowGameOverModal] = useState(false);
   const [myCards, setMyCards] = useState(myCardsFromReducer);
   const [opponentCards, setOpponentCards] = useState([]);
   const [mySelectedCard, setMySelectedCard] = useState(null);
   const [opponentSelectedCard, setOpponentSelectedCard] = useState(null);
-  const [duelInfo, setDuelInfo] = useState({ myAp: 100, opponentAp: 100, turn: users.opponent });
+  const [duelInfo, setDuelInfo] = useState({
+    duelId: 0, myAp: 100, opponentAp: 100, turn: users.opponent,
+  });
   const [isLoading, setIsLoading] = useState({ main: false, endTurn: false, attack: false });
 
   const endTurn = async () => {
@@ -27,7 +37,7 @@ export default function Battle(/* { setCurrentComponent, components } */) {
     setMySelectedCard(null);
     setOpponentSelectedCard(null);
     const payload = {
-      duelId: opponent.duel_id,
+      duelId: duelInfo.duelId,
     };
     const context = {
       method: 'POST',
@@ -50,7 +60,7 @@ export default function Battle(/* { setCurrentComponent, components } */) {
   const attack = async () => {
     setIsLoading((old) => ({ ...old, main: true, attack: true }));
     const payload = {
-      duelId: opponent.duel_id,
+      duelId: duelInfo.duelId,
       attCardId: mySelectedCard.id,
       defCardId: opponentSelectedCard.id,
     };
@@ -74,39 +84,94 @@ export default function Battle(/* { setCurrentComponent, components } */) {
       });
   };
 
+  const endGame = () => {
+    setCurrentComponent(components.chooseCard);
+    dispatch(setFightCards([]));
+    navigate('/menu');
+  };
+
+  const gameOverModal = () => {
+    const isWinnerMe = winner === users.me;
+    return (
+      <Modal show={showGameOverModal} onHide={() => setShowGameOverModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>GAME OVER</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p style={{
+            fontSize: '25px',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            color: `${isWinnerMe ? 'green' : 'red'}`,
+          }}
+          >
+            {isWinnerMe ? 'YOU WIN!' : 'YOU LOOSE!'}
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowGameOverModal(false)}>Close</Button>
+          <Button variant="primary" onClick={() => { setShowGameOverModal(false); endGame(); }}>To menu</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  };
+
+  useEffect(() => {
+    if (winner) setShowGameOverModal(true);
+  }, [winner]);
+
+  // clean up on unmount
+  useEffect(() => () => endGame(), []);
+
   // socket listeners init
   useEffect(() => {
-    notifierSocket.on('duel_info', (data) => {
-      // todo is user_1_id string or int?
-      if (data.user_1_id === me.id) {
-        setMyCards(data.user_1_cards_info);
-        setOpponentCards(data.user_2_cards_info);
-        setDuelInfo({
-          myAp: data.user_1_ap,
-          opponentAp: data.user_2_ap,
-          turn: data.turn === 1 ? users.me : users.opponent,
-        });
-        toast.success('Stats updated!');
-      } else {
-        setMyCards(data.user_2_cards_info);
-        setOpponentCards(data.user_1_cards_info);
-        setDuelInfo({
-          myAp: data.user_2_ap,
-          opponentAp: data.user_1_ap,
-          turn: data.turn === 1 ? users.opponent : users.me,
-        });
-        toast.success('Stats updated!');
+    notifierSocket.on('message', (res) => {
+      const data = JSON.parse(res);
+      const player1Id = parseInt(data.player_1?.id, 10);
+      const player2Id = parseInt(data.player_2?.id, 10);
+      const isMsgForMe = player1Id === me.id || player2Id === me.id;
+
+      if ((data.state === 'fighting' || data.state === 'game_over') && isMsgForMe) {
+        if (player1Id === me.id) {
+          setMyCards(data.player_1?.user_card_ids);
+          setOpponentCards(data.player_2?.user_card_ids);
+          setDuelInfo((old) => ({
+            ...old,
+            myAp: data.player_1?.user_ap,
+            opponentAp: data.player_2?.user_ap,
+            duelId: data.duel_id,
+            turn: data.turn === 1 ? users.me : users.opponent,
+          }));
+          toast.success('Stats updated!');
+        } else {
+          setMyCards(data.player_2?.user_card_ids);
+          setOpponentCards(data.player_1?.user_card_ids);
+          setDuelInfo((old) => ({
+            ...old,
+            myAp: data.player_2?.user_ap,
+            opponentAp: data.player_1?.user_ap,
+            duelId: data.duel_id,
+            turn: data.turn === 1 ? users.opponent : users.me,
+          }));
+          toast.success('Stats updated!');
+        }
+      }
+
+      const winnerIdDB = parseInt(data.winner_id, 10);
+      if (winnerIdDB === me.id || winnerIdDB === opponent.id) {
+        setWinner(winnerIdDB === me.id ? users.me : users.opponent);
       }
       setIsLoading({ main: false, endTurn: false, attack: false });
     });
 
     return () => {
-      notifierSocket.off('duel_info');
+      notifierSocket.off('message');
     };
   }, []);
 
   return (
     <div className="card-battle-arena">
+      {gameOverModal()}
       <div className="chat-panel-container">
         <ChatPanel
           user1={me}
@@ -142,7 +207,7 @@ export default function Battle(/* { setCurrentComponent, components } */) {
             className="battleBtn btn btn-primary attack"
             type="button"
             onClick={async () => endTurn()}
-            disabled={isLoading.main || duelInfo.turn !== users.me}
+            disabled={isLoading.main || duelInfo.turn !== users.me || winner}
           >
             End turn
             {' '}
@@ -158,6 +223,8 @@ export default function Battle(/* { setCurrentComponent, components } */) {
               || !mySelectedCard
               || !opponentSelectedCard
               || duelInfo.turn !== users.me
+              || winner
+              || duelInfo.myAp <= 0
             }
           >
             Attack

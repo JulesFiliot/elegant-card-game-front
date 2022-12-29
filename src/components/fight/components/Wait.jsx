@@ -53,40 +53,56 @@ export default function Wait({ setCurrentComponent, components }) {
 
   // socket listeners init
   useEffect(() => {
-    notifierSocket.on('pool:opponentFound', (opponent) => {
-      // todo is it duel_id or duelId inside data?
-      const data = JSON.parse(opponent);
+    notifierSocket.on('message', async (msg) => {
+      const data = JSON.parse(msg);
+      const player1Id = parseInt(data.player_1.id, 10);
+      const player2Id = parseInt(data.player_2.id, 10);
+      const isMePlayer1 = player1Id === user.id;
+      const isMePlayer2 = player2Id === user.id;
 
-      // set opponent
-      dispatch(setOpponent(data));
+      if ((isMePlayer1 || isMePlayer2) && data.state === 'choose_cards') {
+        const opponentId = isMePlayer1 ? player2Id : player1Id;
 
-      // choose cards
-      const payload = {
-        duelId: data.duel_id,
-        userId: user.id,
-        cardIds: fightCards.map((card) => card.id),
-      };
-      const context = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      };
-      fetch(`${process.env.REACT_APP_DUEL_URL}/choose_cards/`, context)
-        .then((response) => {
-          if (!response.ok) throw new Error('Something went wrong while sending chosen cards to duel server');
-          setCurrentComponent(components.battle);
-          toast.success('Opponent found! Please wait for the duel to start!');
-        })
-        .catch((err) => {
-          setCurrentComponent(components.chooseCard);
-          toast.error(err.toString());
-        });
+        // get opponent info
+        const userContext = {
+          method: 'GET',
+        };
+        fetch(`${process.env.REACT_APP_API_URL}/user/${opponentId}`, userContext)
+          .then((res) => {
+            if (!res.ok) throw new Error('Something went wrong while fetching opponent info');
+            return res.json();
+          })
+          .then((opInfo) => dispatch(setOpponent(opInfo)))
+          .catch((err) => toast.error(err.toString()));
+
+        // send chosen cards
+        const payload = {
+          duelId: data.duel_id,
+          userId: user.id,
+          cardIds: fightCards.map((card) => card.id),
+        };
+        const context = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        };
+        fetch(`${process.env.REACT_APP_DUEL_URL}/choose_cards/`, context)
+          .then((response) => {
+            if (!response.ok) throw new Error('Something went wrong while sending chosen cards to duel server');
+            setCurrentComponent(components.battle);
+            toast.success('Opponent found! Please wait for the duel to start!');
+          })
+          .catch((err) => {
+            setCurrentComponent(components.chooseCard);
+            toast.error(err.toString());
+          });
+      }
     });
 
     return () => {
-      notifierSocket.off('pool:opponentFound');
+      notifierSocket.off('message');
     };
   }, []);
 
@@ -120,15 +136,6 @@ export default function Wait({ setCurrentComponent, components }) {
         }}
       >
         go to fight arena | TO DELETE
-      </button>
-      <button
-        type="button"
-        onClick={(e) => {
-          e.preventDefault();
-          notifierSocket.emit('skipOpponentWait');
-        }}
-      >
-        manually ask for opponent | TO DELETE
       </button>
     </div>
   );
