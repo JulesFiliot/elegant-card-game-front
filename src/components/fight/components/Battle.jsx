@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './Battle.css';
 import { SocketContext } from '../../../context/socket';
 import Loader from '../../card/components/Loader';
-import { setFightCards } from '../../../core/actions';
+import { setFightCards, userUpdate } from '../../../core/actions';
 
 export default function Battle({ setCurrentComponent, components }) {
   const dispatch = useDispatch();
@@ -91,7 +91,7 @@ export default function Battle({ setCurrentComponent, components }) {
   };
 
   const gameOverModal = () => {
-    const isWinnerMe = winner === users.me;
+    const isWinnerMe = winner?.winner === users.me;
     return (
       <Modal show={showGameOverModal} onHide={() => setShowGameOverModal(false)}>
         <Modal.Header closeButton>
@@ -105,7 +105,7 @@ export default function Battle({ setCurrentComponent, components }) {
             color: `${isWinnerMe ? 'green' : 'red'}`,
           }}
           >
-            {isWinnerMe ? 'YOU WIN!' : 'YOU LOOSE!'}
+            {isWinnerMe ? `YOU WIN $${winner?.pay}!` : `YOU LOOSE $${winner?.pay}!`}
           </p>
         </Modal.Body>
         <Modal.Footer>
@@ -159,7 +159,11 @@ export default function Battle({ setCurrentComponent, components }) {
 
       const winnerIdDB = parseInt(data.winner_id, 10);
       if (winnerIdDB === me.id || winnerIdDB === opponent.id) {
-        setWinner(winnerIdDB === me.id ? users.me : users.opponent);
+        const isWinnerMe = winnerIdDB === me.id;
+        setWinner({ winner: winnerIdDB === me.id ? users.me : users.opponent, pay: data.pay });
+        dispatch(userUpdate(
+          { ...me, account: isWinnerMe ? me.account + data.pay : me.account - data.pay },
+        ));
       }
       setIsLoading({ main: false, endTurn: false, attack: false });
     });
