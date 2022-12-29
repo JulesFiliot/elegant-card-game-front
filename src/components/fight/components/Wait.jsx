@@ -127,16 +127,6 @@ export default function Wait({ setCurrentComponent, components }) {
       >
         CANCEL
       </button>
-      <button
-        type="button"
-        onClick={(e) => {
-          e.preventDefault();
-          setCurrentComponent(components.battle);
-          window.removeEventListener('beforeunload', handleBeforeUnload);
-        }}
-      >
-        go to fight arena | TO DELETE
-      </button>
     </div>
   );
 }
