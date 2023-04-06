@@ -1,4 +1,4 @@
-# "Elegant Card Game" front-end
+# Elegant Card Game front-end
 Current repo
 
 # Back-end: 
